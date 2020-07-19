@@ -1,0 +1,58 @@
+_schema-version: "3.2"
+ID: Trello-CAP-TimesheetManagement
+version: 0.0.1
+modules:
+  - name: trello-cap-timesheetmanagement-approuter
+    type: approuter.nodejs
+    path: trello-cap-timesheetmanagement-approuter
+    requires:
+      - name: Trello-CAP-TimesheetManagement_html_repo_runtime
+      - name: uaa_Trello-CAP-TimesheetManagement
+    parameters:
+      disk-quota: 256M
+      memory: 256M
+  - name: Trello-CAP-TimesheetManagement_ui_deployer
+    type: com.sap.application.content
+    path: .
+    requires:
+      - name: Trello-CAP-TimesheetManagement_html_repo_host
+        parameters:
+          content-target: true
+    build-parameters:
+      build-result: resources
+      requires:
+        - artifacts:
+            - TimesheetManager-content.zip
+          name: TimesheetManager
+          target-path: resources/
+  - name: TimesheetManager
+    type: html5
+    path: TimesheetManager
+    build-parameters:
+      builder: custom
+      commands:
+        - npm run build
+      supported-platforms: []
+resources:
+  - name: Trello-CAP-TimesheetManagement_html_repo_runtime
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: html5-apps-repo
+      service-plan: app-runtime
+  - name: Trello-CAP-TimesheetManagement_html_repo_host
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: html5-apps-repo
+      service-plan: app-host
+  - name: uaa_Trello-CAP-TimesheetManagement
+    type: org.cloudfoundry.managed-service
+    parameters:
+      path: ./xs-security.json
+      service: xsuaa
+      service-name: Trello-CAP-TimesheetManagement-xsuaa-service
+      service-plan: application
+build-parameters:
+  before-all:
+    - builder: custom
+      commands:
+        - npm install
