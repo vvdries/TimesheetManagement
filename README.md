@@ -1,25 +1,26 @@
-# Getting Started
+# Trello Timesheet Management with CAP ⏱️
 
-Welcome to your new project.
+Welcome to this Blog Series about “Trello Timesheet Management with CAP ⏱️”. 
 
-It contains these folders and files, following our recommended project layout:
+In this Blog Series we will build a Multi Target Application running on SAP Cloud Foundry.
+We will use the SAP Cloud Application Programming Model to build a Business Application that connects to the Trello APIs.
 
-File / Folder | Purpose
+This way we can consume our Trello information/data to build a Timesheet Application with it.
+A full Timesheet application using a HANA Database which its data is exposed via an OData V4 Service.
+Integrated with a Node.JS Module to authorize and authenticate the user against the Trello APIs.
+
+All these moodules secured by a single XSUAA service instance.
+
+If you want to get more information about this whole setup and development process, I invite you to have a look at my Blog series about "Welcome to this Blog Series about “Trello Timesheet Management with CAP ⏱️". 
+
+Trello Timesheet Management with CAP ⏱️ - Blog Series
 ---------|----------
-`app/` | content for UI frontends go here
-`db/` | your domain models and data go here
-`srv/` | your service models and code go here
-`package.json` | project metadata and configuration
-`readme.md` | this getting started guide
+Trello Timesheet Management with CAP ⏱️ 
+Trello Timesheet Management with CAP ⏱️ - Setup the IDE & MTA Project #1
+Trello Timesheet Management with CAP ⏱️ -  Setup a Database and Service Module #2
+Trello Timesheet Management with CAP ⏱️ – Connect to Trello API’s via a Node.js Module #3
+Trello Timesheet Management with CAP ⏱️ – Build the Trello Timesheet HTML5 Module #4
+Trello Timesheet Management with CAP ⏱️ – Add a Fiori Launchpad Site Module #5
 
+MAKE LINKS
 
-## Next Steps...
-
-- Open a new terminal and run  `cds watch`
-- ( in VSCode simply choose _**Terminal** > Run Task > cds watch_ )
-- Start adding content, e.g. a [db/schema.cds](db/schema.cds), ...
-
-
-## Learn more...
-
-Learn more at https://cap.cloud.sap/docs/get-started/
