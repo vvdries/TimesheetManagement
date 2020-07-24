@@ -13,14 +13,20 @@ All these moodules secured by a single XSUAA service instance.
 
 If you want to get more information about this whole setup and development process, I invite you to have a look at my Blog series about "Welcome to this Blog Series about “Trello Timesheet Management with CAP ⏱️". 
 
-Trello Timesheet Management with CAP ⏱️ - Blog Series
+File / Folder | Purpose
 ---------|----------
-Trello Timesheet Management with CAP ⏱️ 
-Trello Timesheet Management with CAP ⏱️ - Setup the IDE & MTA Project #1
-Trello Timesheet Management with CAP ⏱️ -  Setup a Database and Service Module #2
-Trello Timesheet Management with CAP ⏱️ – Connect to Trello API’s via a Node.js Module #3
-Trello Timesheet Management with CAP ⏱️ – Build the Trello Timesheet HTML5 Module #4
-Trello Timesheet Management with CAP ⏱️ – Add a Fiori Launchpad Site Module #5
+`Introduction` | Trello Timesheet Management with CAP ⏱️ 
+`db/` | your domain models and data go here
+`srv/` | your service models and code go here
+`package.json` | project metadata and configuration
+`readme.md` | this getting started guide
 
-MAKE LINKS
 
+Trello Timesheet Management with CAP ⏱️ - Blog Series |
+---------|
+Trello Timesheet Management with CAP ⏱️  |
+Trello Timesheet Management with CAP ⏱️ - Setup the IDE & MTA Project #1 |
+Trello Timesheet Management with CAP ⏱️ -  Setup a Database and Service Module #2 |
+Trello Timesheet Management with CAP ⏱️ – Connect to Trello API’s via a Node.js Module #3 |
+Trello Timesheet Management with CAP ⏱️ – Build the Trello Timesheet HTML5 Module #4 |
+Trello Timesheet Management with CAP ⏱️ – Add a Fiori Launchpad Site Module #5 |
