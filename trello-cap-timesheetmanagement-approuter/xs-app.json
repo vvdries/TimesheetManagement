@@ -3,6 +3,13 @@
     "authenticationMethod": "route",
     "routes": [
         {
+            "source": "^/timesheetService/(.*)$",
+            "target": "/timesheet-management/$1",
+            "authenticationType": "xsuaa",
+            "destination": "srv_api",
+            "csrfProtection": false
+        },
+        {
             "source": "^(.*)$",
             "target": "$1",
             "service": "html5-apps-repo-rt",

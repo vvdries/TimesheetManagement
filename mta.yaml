@@ -1,6 +1,8 @@
 _schema-version: "3.2"
 ID: Trello-CAP-TimesheetManagement
 version: 0.0.1
+parameters:
+  enable-parallel-deployments: true
 modules:
   - name: trello-cap-timesheetmanagement-approuter
     type: approuter.nodejs
@@ -8,6 +10,12 @@ modules:
     requires:
       - name: Trello-CAP-TimesheetManagement_html_repo_runtime
       - name: uaa_Trello-CAP-TimesheetManagement
+      - name: srv_api
+        group: destinations
+        properties:
+          forwardAuthToken: true
+          name: srv_api
+          url: "~{url}"
     parameters:
       disk-quota: 256M
       memory: 256M
@@ -33,6 +41,28 @@ modules:
       commands:
         - npm run build
       supported-platforms: []
+  - name: Trello-CAP-TimesheetManagement-srv
+    type: nodejs
+    path: gen/srv
+    properties:
+      EXIT: 1 # required by deploy.js task to terminate
+    requires:
+      # Resources extracted from CAP configuration
+      - name: Trello-CAP-TimesheetManagement-db
+      - name: uaa_Trello-CAP-TimesheetManagement
+    provides:
+      - name: srv_api
+        properties:
+          url: "${default-url}"
+  - name: db
+    type: hdb
+    path: gen/db
+    parameters:
+      app-name: Trello-CAP-TimesheetManagement-db
+    requires:
+      # 'hana' and 'xsuaa' resources extracted from CAP configuration
+      - name: Trello-CAP-TimesheetManagement-db
+      - name: uaa_Trello-CAP-TimesheetManagement
 resources:
   - name: Trello-CAP-TimesheetManagement_html_repo_runtime
     type: org.cloudfoundry.managed-service
@@ -51,8 +81,16 @@ resources:
       service: xsuaa
       service-name: Trello-CAP-TimesheetManagement-xsuaa-service
       service-plan: application
+  - name: Trello-CAP-TimesheetManagement-db
+    type: com.sap.xs.hdi-container
+    parameters:
+      service: hana
+      service-plan: hdi-shared
+    properties:
+      hdi-service-name: ${service-name}
 build-parameters:
   before-all:
     - builder: custom
       commands:
         - npm install
+        - npx cds build
