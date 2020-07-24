@@ -13,14 +13,6 @@ All these moodules secured by a single XSUAA service instance.
 
 If you want to get more information about this whole setup and development process, I invite you to have a look at my Blog series about "Welcome to this Blog Series about “Trello Timesheet Management with CAP ⏱️". 
 
-File / Folder | Purpose
----------|----------
-`Introduction` | Trello Timesheet Management with CAP ⏱️ 
-`db/` | your domain models and data go here
-`srv/` | your service models and code go here
-`package.json` | project metadata and configuration
-`readme.md` | this getting started guide
-
 
 Trello Timesheet Management with CAP ⏱️ - Blog Series |
 ---------|
