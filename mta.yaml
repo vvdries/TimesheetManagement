@@ -16,6 +16,12 @@ modules:
           forwardAuthToken: true
           name: srv_api
           url: "~{url}"
+      - name: TrelloAuthorizer_api
+        group: destinations
+        properties:
+          forwardAuthToken: true
+          name: TrelloAuthorizer_api
+          url: "~{url}"
     parameters:
       disk-quota: 256M
       memory: 256M
@@ -63,6 +69,18 @@ modules:
       # 'hana' and 'xsuaa' resources extracted from CAP configuration
       - name: Trello-CAP-TimesheetManagement-db
       - name: uaa_Trello-CAP-TimesheetManagement
+  - name: TrelloAuthorizer
+    type: nodejs
+    path: TrelloAuthorizer
+    provides:
+      - name: TrelloAuthorizer_api
+        properties:
+          url: "${default-url}"
+    requires:
+      - name: uaa_Trello-CAP-TimesheetManagement
+      - name: Trello-CAP-TimesheetManagement-destination-service
+      - name: Trello-API-Keys
+
 resources:
   - name: Trello-CAP-TimesheetManagement_html_repo_runtime
     type: org.cloudfoundry.managed-service
@@ -88,6 +106,15 @@ resources:
       service-plan: hdi-shared
     properties:
       hdi-service-name: ${service-name}
+  - name: Trello-CAP-TimesheetManagement-destination-service
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service-plan: lite
+      service: destination
+  - name: Trello-API-Keys
+    type: org.cloudfoundry.user-provided-service
+    parameters:
+      path: ./Trello-API-Keys.json
 build-parameters:
   before-all:
     - builder: custom
