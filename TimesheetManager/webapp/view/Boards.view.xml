@@ -1,11 +1,43 @@
-<mvc:View controllerName="cap.trello.TimesheetManager.controller.Boards" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m">
-	<Shell id="shell">
-		<App id="app">
-			<pages>
-				<Page id="page" title="{i18n>title}">
-					<content></content>
-				</Page>
-			</pages>
-		</App>
-	</Shell>
+<mvc:View controllerName="cap.trello.TimesheetManager.controller.Boards" xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+	xmlns="sap.m" xmlns:f="sap.f" xmlns:grid="sap.ui.layout.cssgrid" xmlns:tnt="sap.tnt">
+	<Page id="page" title="{i18n>title}">
+		<content>
+			<Toolbar design="Transparent" style="Clear" height="auto" class="sapUiSmallMarginTop">
+				<Title text="{i18n>welcome}" class="sapUiSmallMarginBegin"/>
+				<ToolbarSpacer/>
+				<Title text="{UserState>/oUser/fullName}" class="sapUiSmallMarginTop sapUiSmallMarginEnd" visible="{= !${device>/system/phone}}"/>
+				<f:Avatar src="{UserState>/oUser/avatarUrl}" displaySize="XS" class="sapUiSmallMarginTop sapUiSmallMarginEnd borderAvatar"
+					visible="{= !${device>/system/phone} }"/>
+			</Toolbar>
+            <Panel>
+                <content>
+                    <f:GridList id="gridListBoards" headerText="{i18n>selectBoard}" items="{BoardState>/aBoards}">
+                        <f:customLayout>
+                            <grid:GridBoxLayout boxMinWidth="17rem"/>
+                        </f:customLayout>
+                        <CustomListItem press=".onBoardPress" type="Active">
+                            <VBox height="100%">
+                                <VBox class="sapUiSmallMargin">
+                                    <layoutData>
+                                        <FlexItemData growFactor="1" shrinkFactor="0"/>
+                                    </layoutData>
+                                    <Title text="{BoardState>name}" class="sapUiSmallMarginBottom"/>
+                                    <VBox height="60px">
+                                        <Label text="{BoardState>desc}" wrapping="true" class="sapUiSmallMarginBottom"/>
+                                    </VBox>
+                                    <tnt:InfoLabel text="{= ${BoardState>closed} ? ${i18n>closed} : ${i18n>active}}" colorScheme="{= ${BoardState>closed} ? 3 : 8}" displayOnly="true"/>
+                                    <Toolbar style="Clear">
+                                        <Text text="{path: 'BoardState>dateLastActivity', type: 'sap.ui.model.type.DateTime', formatOptions: { source : { pattern : 'yyyy-MM-ddTHH:mm:ssZ' }, pattern: 'yyyy-MM-dd HH:mm:ss'}}"/>
+                                        <ToolbarSpacer/>
+                                        <Image src="{path: 'BoardState>id', formatter: '.formatter.getTrelloIcon'}" width="20px" press=".toTrelloBoard" tooltip="{i18n>openBoardOnTrello}"/>
+                                    </Toolbar>
+                                </VBox>
+                            </VBox>
+                        </CustomListItem>
+                    </f:GridList>
+                </content>
+            </Panel>
+		</content>
+	</Page>
 </mvc:View>
+

@@ -44,6 +44,10 @@ module.exports = class Trello {
     }
 
     getLoginCallbackURL() {
+        return `${this.config.destinations.find(oDest => oDest.destinationConfiguration.Name === "trello-cap-timesheetmanagement-approuter").destinationConfiguration.URL}/TrelloAuthorizer/loginCallback`;
+    }
+
+    getApprouterURL() {
         return `${this.config.destinations.find(oDest => oDest.destinationConfiguration.Name === "trello-cap-timesheetmanagement-approuter").destinationConfiguration.URL}`;
     }
 
@@ -85,6 +89,7 @@ module.exports = class Trello {
         // taken() on the cache is the equivalent to calling get(key) + del(key).
         const tokenSecret = this.getCache().take(token);
         const verifier = query.oauth_verifier;
+
         this.getOauth().getOAuthAccessToken(token, tokenSecret, verifier, function (error, accessToken, accessTokenSecret) {
 
             // Here we have the accessToken and accessTokenSecret. Put them to the cache. 
@@ -100,8 +105,8 @@ module.exports = class Trello {
             this.getCache().set(req.user.id, oTokens);
 
             // Return the user back to the HTML5 Module
-            res.redirect(this.config.approuterUrl);
-        });
+            res.redirect(this.getApprouterURL());
+        }.bind(this));
     }
 
     // Get the userInfo
@@ -154,9 +159,8 @@ module.exports = class Trello {
 
         const query = url.parse(req.url, true).query;
         const boardId = query.boardId;
-        const boardUrl = `${this.getTrelloAPI()}/boards/${boardId}/${boardId}`;
-
-        this.getOauth.getProtectedResource(boardUrl, "GET", accessToken, accessTokenSecret, function (error, data) {
+        const boardUrl = `${this.getTrelloAPI()}/boards/${boardId}/cards`;
+        this.getOauth().getProtectedResource(boardUrl, "GET", accessToken, accessTokenSecret, function (error, data) {
             res.send(data);
         });
     }

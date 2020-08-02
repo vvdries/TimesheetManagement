@@ -52,22 +52,20 @@ app.get("/login", function (req, res) {
 
 app.get("/loginCallback", function (req, res) {
     this.oTrello.loginCallback(req, res);
-});
+}.bind(this));
 
 app.get('/getUserInfo', function (req, res) {
-    // Read cache here already and if found continue, else return the login endpoint function.
-    // The req.user.id holds the e-mail-address of the logged in user.
     return this.oTrello.getCache().has(req.user.id) ? this.oTrello.getUserInfo(req, res) : this.oTrello.unauthorizedAgainstTrello(res);
-});
+}.bind(this));
 
 app.get("/getAllBoards", function (req, res) {
     return this.oTrello.getCache().has(req.user.id) ? this.oTrello.getAllBoards(req, res) : this.oTrello.unauthorizedAgainstTrello(res);
-});
+}.bind(this));
 
 app.get("/getBoardById", function (req, res) {
     return this.oTrello.getCache().has(req.user.id) ? this.oTrello.getBoardById(req, res) : this.oTrello.unauthorizedAgainstTrello(res);
-});
+}.bind(this));
 
 app.get("/getCardsByBoardId", function (req, res) {
     return this.oTrello.getCache().has(req.user.id) ? this.oTrello.getCardsByBoardId(req, res) : this.oTrello.unauthorizedAgainstTrello(res);
-});
+}.bind(this));

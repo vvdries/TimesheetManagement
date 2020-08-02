@@ -1,0 +1,68 @@
+<mvc:View controllerName="cap.trello.TimesheetManager.controller.Cards" xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+	xmlns="sap.m" xmlns:semantic="sap.m.semantic" xmlns:commons="sap.suite.ui.commons">
+	<Page id="page" title="{i18n>title}" showNavButton="true" navButtonPress=".onNavBack">
+		<content>
+			<SplitContainer>
+				<masterPages>
+					<semantic:MasterPage title="{BoardState>/oCurrentBoard/name}">
+						<semantic:content>
+							<List id="listCards" selectionChange=".onCardSelect" items="{ path: 'BoardState>/oCurrentBoard/cards', sorter: { path: 'name', descending: false }}"
+								mode="{= ${device>/system/phone} ? 'None' : 'SingleSelectMaster'}" growing="true" growingScrollToLoad="true">
+								<headerToolbar>
+									<Toolbar>
+										<SearchField width="100%" liveChange="onCardSearch" search="onCardSearch"/></Toolbar>
+								</headerToolbar>
+								<items>
+									<ObjectListItem type="Active" title="{BoardState>name}">
+										<attributes>
+											<ObjectAttribute text="{BoardState>desc}"/>
+										</attributes>
+									</ObjectListItem>
+								</items>
+							</List>
+						</semantic:content>
+					</semantic:MasterPage>
+				</masterPages>
+				<detailPages>
+					<semantic:DetailPage title="{i18n>cardInfo}">
+						<semantic:content>
+                            <MessagePage text="{i18n>noCardSelectedTitle}" description="{i18n>noCardSelectedDesc}" showHeader="false" icon="sap-icon://timesheet" visible="{= !${BoardState>/oCurrentCard} ? true : false}"/>
+                            <ObjectHeader id="oHeaderCard" binding="{BoardState>/oCurrentCard}" visible="{= ${BoardState>/oCurrentCard} ? true : false}" responsive="true" icon="{path: 'BoardState>/oCurrentCard/id', formatter: '.formatter.getTrelloIcon'}" iconTooltip="{i18n>openCardOnTrello}" intro="{BoardState>desc}" title="{BoardState>name}" backgroundDesign="Translucent" iconActive="true" iconPress=".toTrelloCard">
+                                <attributes>
+                                    <ObjectAttribute title="{i18n>dateLastActivity}" text="{path: 'BoardState>dateLastActivity', type: 'sap.ui.model.type.DateTime', formatOptions: { source : { pattern : 'yyyy-MM-ddTHH:mm:ssZ' }, pattern: 'yyyy-MM-dd HH:mm:ss'}}"/>
+                                </attributes>
+                                <statuses>
+                                    <ObjectStatus title="{i18n>due}" text="{path: 'BoardState>due', formatter: '.formatter.emptyDueDate', type: 'sap.ui.model.type.DateTime', formatOptions: { source : { pattern : 'yyyy-MM-ddTHH:mm:ssZ' }, pattern: 'yyyy-MM-dd HH:mm:ss'}}" state="{path: 'BoardState>due', formatter: '.formatter.checkDueDateStatus'}"/>
+                                    <ObjectStatus class="sapUiSmallMarginBottom" text="{path: 'BoardState>due', formatter: '.formatter.checkDueDateText'}" inverted="true" state="{path: 'BoardState>due', formatter: '.formatter.checkDueDateStatusInverted'}"/>
+                                </statuses>
+                            </ObjectHeader>
+                            <Toolbar style="Clear" class="sapUiSmallMarginTop">
+                                <ObjectHeader title="{i18n>spentHoursTimeline}" visible="{= ${BoardState>/oCurrentCard} ? true : false}"/>
+                                <ToolbarSpacer/>
+                            </Toolbar>
+                            <commons:Timeline id="idTimeline" showFilterBar="false" noDataText="{i18n>noHoursSpent}" enableDoubleSided="false" content="{BoardState>/oCurrentCard/spentHours}" visible="{= ${BoardState>/oCurrentCard} ? true : false}">
+                                <commons:content>
+                                    <commons:TimelineItem dateTime="{path: 'BoardState>date', type: 'sap.ui.model.type.DateTime', pattern: 'yyyy-MM-dd HH:mm:ss'}" userName="{BoardState>hours} {i18n>hours}" title="{BoardState>fullName}" icon="sap-icon://per-diem">
+                                        <VBox>
+                                            <Text text="{BoardState>comment}"/>
+                                            <OverflowToolbar style="Clear">
+                                                <ObjectStatus class="sapUiTinyMarginTop" title="{i18n>Status}" text="{path: 'BoardState>status', formatter: '.formatter.spentHourStatus'}" state="{= ${BoardState>status} === 'Done' ? 'Success' : ${BoardState>status} === 'OnHold' ? 'Error' : 'Warning'}"/>
+                                                <ToolbarSpacer/>
+                                                <Button tooltip="{i18n>deleteSpentHour}" icon="sap-icon://delete" type="Transparent" press=".onDeleteSpentHour"/>
+                                                <Button tooltip="{i18n>editSpentHour}" icon="sap-icon://edit" type="Transparent" press=".onEditSpentHour"/>
+                                            </OverflowToolbar>
+                                        </VBox>
+                                    </commons:TimelineItem>
+                                </commons:content>
+                            </commons:Timeline>
+						</semantic:content>
+						<semantic:customFooterContent>
+                            <Button text="{i18n>addSpentHour}" visible="{= ${BoardState>/oCurrentCard} ? true : false}" icon="sap-icon://create-entry-time" tooltip="{i18n>AddSpentHourTooltip}" press=".onAddSpentHour"/>
+                            <Button text="{i18n>toExcel}" icon="sap-icon://excel-attachment" tooltip="{i18n>toExcelTooltip}" press=".onExcelExport" visible="{= ${BoardState>/oCurrentBoard/cards}.length > 0 ? true : false}"/>
+                        </semantic:customFooterContent>
+					</semantic:DetailPage>
+				</detailPages>
+			</SplitContainer>
+		</content>
+	</Page>
+</mvc:View>

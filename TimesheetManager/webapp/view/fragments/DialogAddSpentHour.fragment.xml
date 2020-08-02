@@ -1,0 +1,29 @@
+<core:FragmentDefinition xmlns="sap.m" 
+    xmlns:f="sap.ui.layout.form" 
+    xmlns:core="sap.ui.core">
+    <Dialog title="{DialogAddSpentHourModel>/title}">
+        <f:SimpleForm editable="true" layout="ResponsiveGridLayout">
+            <f:content>
+                <VBox>
+                    <ObjectAttribute title="{i18n>Board}" text="{BoardState>/oCurrentBoard/name}"/>
+                    <ObjectAttribute title="{i18n>Card}" text="{BoardState>/oCurrentCard/name}"/>
+                    <ObjectAttribute title="{i18n>User}" text="{UserState>/oUser/fullName}"/>
+                </VBox>
+                <Label text="{i18n>SpentOnDate}" required="true"/>
+                <DateTimePicker value="{DialogAddSpentHourModel>/oSpentHour/date}" placeholder="Select the date..." change="handleSpentHoursDateChange" class="sapUiSmallMarginBottom"/>
+                <Label text="{i18n>SpentHours}" required="true"/>
+                <Input value="{DialogAddSpentHourModel>/oSpentHour/hours}" type="Number" placeholder="Enter the spent hours..."/>
+                <Label text="{i18n>Status}" required="true"/>
+                <Select forceSelection="false" selectedKey="{DialogAddSpentHourModel>/oSpentHour/status}" items="{ path: 'DialogAddSpentHourModel>/possibleStatus', sorter: { path: 'status' } }">
+                    <core:Item key="{DialogAddSpentHourModel>id}" text="{DialogAddSpentHourModel>status}"/>
+                </Select>
+                <Label text="{i18n>Comment}"/>
+                <TextArea value="{DialogAddSpentHourModel>/oSpentHour/comment}" width="100%"/>
+            </f:content>
+        </f:SimpleForm>
+        <buttons>
+            <Button text="{i18n>cancel}" press=".onClose" type="Reject"/>
+            <Button text="{= ${DialogAddSpentHourModel>/isNewSpentHour} ? ${i18n>Save} : ${i18n>Update}}" press=".submitForm" type="Accept"/>
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

@@ -1,0 +1,12 @@
+<core:FragmentDefinition xmlns="sap.m" 
+    xmlns:core="sap.ui.core">
+    <Dialog title="{DialogDeleteSpentHourModel>/title}" showHeader="true">
+        <content>
+            <Label text="{i18n>deletionConfirmationText}" class="sapUiTinyMarginBegin sapUiTinyMarginTop"/>
+        </content>
+        <buttons>
+            <Button text="{i18n>Yes}" press=".onDeleteSpentHour" type="Reject"/>
+            <Button text="{i18n>No}" press=".onClose" type="Ghost"/>
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>
