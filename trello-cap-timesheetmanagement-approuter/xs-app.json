@@ -1,5 +1,5 @@
 {
-    "welcomeFile": "captrelloTimesheetManager/",
+    "welcomeFile": "/cp.portal",
     "authenticationMethod": "route",
     "routes": [
         {

@@ -105,7 +105,7 @@ module.exports = class Trello {
             this.getCache().set(req.user.id, oTokens);
 
             // Return the user back to the HTML5 Module
-            res.redirect(this.getApprouterURL());
+            res.redirect(`${this.getApprouterURL()}/#TimesheetManager-display`);
         }.bind(this));
     }
 

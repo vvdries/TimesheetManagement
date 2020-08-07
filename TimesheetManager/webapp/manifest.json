@@ -14,9 +14,26 @@
         "sourceTemplate": {
             "id": "html5moduletemplates.basicSAPUI5ApplicationProjectModule",
             "version": "1.40.12"
+        },
+        "crossNavigation": {
+            "inbounds": {
+                "intent1": {
+                    "signature": {
+                        "parameters": {},
+                        "additionalParameters": "allowed"
+                    },
+                    "semanticObject": "TimesheetManager",
+                    "action": "display",
+                    "title": "Timesheet Manager",
+                    "info": "Manage Timesheet with Trello info",
+                    "subTitle": "Easy time management",
+                    "icon": "sap-icon://timesheet"
+                }
+            }
         }
     },
     "sap.ui": {
+        "fullWidth": true,
         "technology": "UI5",
         "icons": {
             "icon": "",
