@@ -17,7 +17,7 @@
         "start": "npx cds run"
     },
     "devDependencies": {
-        "@sap/ui5-builder-webide-extension": "1.0.x",
+        "@sap/ui5-builder-webide-extension": "1.1.x",
         "@ui5/cli": "2.2.6",
         "eslint": "5.16.x",
         "@sap/eslint-plugin-ui5-jsdocs": "2.0.x",
